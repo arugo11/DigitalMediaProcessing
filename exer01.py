@@ -15,4 +15,4 @@ b = int(sys.argv[2])
 #a*b回だけ 　hello, world  と表示する
 #余計なものは表示しないようにしてください
 #(提出時に下のprint(a,b)は消してください)
-print(a, b)
+[print("hello, world") for _ in range(a*b)]
