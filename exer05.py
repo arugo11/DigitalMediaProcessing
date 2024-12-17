@@ -66,7 +66,7 @@ class Env:
         def __init__(self):
             _maze = np.uint8( cv2.imread(sys.argv[1]) )
             H, W = _maze.shape[:2] #type:ignore
-            self._Qtable = np.zeros((H, W, 4)) # 4はアクションの種類
+            self._Qtable = np.zeros((4, H, W)) # 4はアクションの種類
 
         # 行動の選択
         def get_action(self, state:list[int] , epsilon: float) -> int:
