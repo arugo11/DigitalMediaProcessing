@@ -69,17 +69,28 @@ class Env:
             self._Qtable = np.zeros((H, W, 4)) # 4はアクションの種類
 
         # 行動の選択
-        def get_action(self, state, epsilon):
+        def get_action(self, state:list[int] , epsilon: float) -> int:
             if epsilon > np.random.uniform(0,1):
                 next_action:int = np.random.choice([UP,LEFT])
             else:
-                next_action = np.random.choice(
+                next_action:int  = np.random.choice(
                     np.where(
                     self._Qtable[:,state[0],state[1]]
                     ==self._Qtable[:,state[0],state[1]].max()
                 )[0]
                 ) 
             return next_action
+
+        # Q値の更新
+        def update_Qtable(self, 
+                          state:list[int],      # 現在の状況
+                          action: int,          # 行動(0 .. 3)
+                          reward: int,          # 報酬(-1 .. 1)
+                          next_state:list[int]  # 次の状況
+                          
+                          ) -> np.ndarray:
+    
+            return self._Qtable
 
 
 
