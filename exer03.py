@@ -3,13 +3,15 @@
 # これより上は編集しないこと
 
 import sys
+import math
+import statistics
 
 #ファイル名をコマンドライン引数から受け取る
 file_in  = sys.argv[1]
 file_out = sys.argv[2]
 
 # 先ずファイルを読み込む(今回は雛形に書いておきます)
-data_array = [] #dataを入れる配列
+data_array: list[float] = [] #dataを入れる配列
 
 f = open(file_in, "r")
 lines = f.readlines()
@@ -19,17 +21,15 @@ for line in lines:
 
 
 # !!ここを編集!!
-
 # ヒント : ライブラリ関数を使ってもOK，for文を使ってもOK
-maxV = 0
-meanV = 0
+# print(data_array)
+maxV: float = max(data_array)
+meanV: float = sum(data_array) / len(data_array)
 
-minV1 = 0
-minV2 = 0
-minV3 = 0
+data_array.sort()
 
 print(maxV, meanV)
-print(minV1, minV2, minV3)
+print( str(data_array[0]) + " " + str(data_array[1]) + " " + str(data_array[2]))
 
 
 
@@ -37,5 +37,5 @@ print(minV1, minV2, minV3)
 # (ヒントを出しすぎかもしれませんが)今回は雛形に書いておきます
 f = open(file_out, "w")
 f.write( str(maxV) + " " + str(meanV) )
-f.write( str(minV1) + " " + str(minV2) + " " + str(minV3) )
+f.write( str(data_array[0]) + " " + str(data_array[1]) + " " + str(data_array[2]) )
 f.close()
