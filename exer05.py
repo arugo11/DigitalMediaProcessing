@@ -60,7 +60,26 @@ class Env:
         elif np.all(tile_statue == GOAL):
             reward += 1
         return np.array(self._state,), reward
+    
+    # Q値の設定
+    class Q_tabel:
+        def __init__(self):
+            _maze = np.uint8( cv2.imread(sys.argv[1]) )
+            H, W = _maze.shape[:2] #type:ignore
+            self._Qtable = np.zeros((H, W, 4)) # 4はアクションの種類
 
+        # 行動の選択
+        def get_action(self, state, epsilon):
+            if epsilon > np.random.uniform(0,1):
+                next_action:int = np.random.choice([UP,LEFT])
+            else:
+                next_action = np.random.choice(
+                    np.where(
+                    self._Qtable[:,state[0],state[1]]
+                    ==self._Qtable[:,state[0],state[1]].max()
+                )[0]
+                ) 
+            return next_action
 
 
 
@@ -69,4 +88,6 @@ def main() -> None:
     print(env._state)
 
 if __name__ == "__main__":
-    main()
+    _maze = np.uint8( cv2.imread(sys.argv[1]) )
+    H, W = _maze.shape[:2] #type:ignore
+    print(H,W)
