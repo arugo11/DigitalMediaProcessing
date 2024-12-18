@@ -35,7 +35,7 @@ class Env:
     def reset(self) -> list[int]:
     # スタートポジション
         start_pos = np.where(np.all(self._maze == START, axis=-1))
-        self._state = [int(start_pos[0][0]), int(start_pos[1][0])]  # 配列から要素を取り出してリスト化
+        self._state = [int(start_pos[0][0]), int(start_pos[1][0])] 
         return self._state
 
     # 行動
@@ -44,11 +44,11 @@ class Env:
         next_state = self._state.copy() 
 
         if action == UP:
-            next_state[0] -= 1  # 上方向は座標が減少
+            next_state[0] -= 1
         elif action == RIGHT:
             next_state[1] += 1
         elif action == DOWN:
-            next_state[0] += 1  # 下方向は座標が増加
+            next_state[0] += 1
         elif action == LEFT:
             next_state[1] -= 1
         else:
@@ -79,8 +79,7 @@ class Q_tabel:
     # 行動の選択
     def get_action(self, state:list[int], epsilon: float) -> int:
         if epsilon > np.random.uniform(0,1):
-            next_action:int = np.random.choice([UP, RIGHT, DOWN, LEFT])  # すべての方向を選択可能に
-        else:
+            next_action:int = np.random.choice([UP, RIGHT, DOWN, LEFT])  
             next_action:int = np.random.choice(
                 np.where(
                     self._Qtable[:,state[0],state[1]]
@@ -151,7 +150,7 @@ def main() -> None:
     minimum_step:int = 0
     maze:np.uint8 = np.uint8(cv2.imread(sys.argv[1]))
     start_pos = np.where(np.all(maze == START, axis=-1))
-    state = [int(start_pos[0][0]), int(start_pos[1][0])]  # 配列から要素を取り出してリスト化
+    state = [int(start_pos[0][0]), int(start_pos[1][0])]  
     
     for t in range(1000):
         # Q-tableから最もQ値が高い行動を選択する
