@@ -49,10 +49,8 @@ class Env:
             next_state[1] += 1
         elif action == DOWN:
             next_state[0] += 1
-        elif action == LEFT:
-            next_state[1] -= 1
         else:
-            exit("予期しないアクション")
+            next_state[1] -= 1
 
         tile_status: np.ndarray = self._maze[next_state[0], next_state[1]] # type: ignore
 
