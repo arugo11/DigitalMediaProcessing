@@ -19,10 +19,14 @@ img_out = np.zeros_like( img )
 
 
 
-#!!以下を編集!!
+#!!以下を編集!!(
+
+def ex_window(h:int, w:int, img):
+
+    return 
 #ヒント : img_outはゼロ初期化されているので周囲2画素分にはアクセスしない
 #ヒント: numpyには中央値を出力する関数があるのでそれを利用するとよいかも
-
+img_out[:, :] = np.median()
 
 
 #float型からuint8型に変換し、書き出し
