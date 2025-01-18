@@ -22,5 +22,13 @@ f.close()
 f = open(fname_out, "w")
 
 # !! TODOここを編集 !!
-f.write("a"+str(5)) #このように書き込む (これは例なので削除してください)
-f.write("b"+str(10)) #このように書き込む (これは例なので削除してください)
+cnt:int  = 1
+ans: str = ""
+for i in range(len(trgt_string) - 1):
+    if trgt_string[i] != trgt_string[i + 1]:
+        ans += trgt_string[i] + str(cnt)
+        cnt = 0
+    cnt += 1
+ans += trgt_string[-1] + str(cnt)
+with open(fname_out, 'w') as f:
+    f.write(ans)
