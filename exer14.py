@@ -7,11 +7,6 @@ import numpy as np
 import sys
 import math
 
-# 以下は木構造表現似関するヒントです。
-# 解答時には不要な部分はすべて削除してください。
-
-# ヒント : 木構造を表現するために下記のクラスを利用すると良いです（使わなくてもよいです）
-# ヒント : 木構造のノードを表すクラスは以下のように定義できます。
 class Node :
     def __init__(self, symbol , value) :
         self.symbol = symbol # このノードのシンボル（a~hのどれか）
@@ -21,19 +16,11 @@ class Node :
         self.right  = None   # 右の子（Noneで初期化）
 
 
-node_a = Node("a", 0.1) #ヒント : シンボルa, 出現確率0.1のノードを初期化
-node_b = Node("b", 0.3) #ヒント : シンボルb, 出現確率0.3のノードを初期化
-node_c = Node("c", 0.5) #ヒント : シンボルc, 出現確率0.5のノードを初期化
 
-# aがルート、aの左の子がb、aの右の子がcになるように木を構築
-node_a.left = node_b
-node_a.right = node_c
-node_b.parent = node_a
-node_c.parent = node_a
+def main() -> None:
+    with open(sys.argv[1]) as f:
+        s = f.read()
+        print(s)
 
-
-# 木をだどって中身を表示
-print("a自身", node_a.value, node_a.symbol)
-print("aの左の子", node_a.left.value, node_a.left.symbol)
-print("aの右の子", node_a.right.value, node_a.right.symbol)
-print("bの親", node_b.parent.value, node_b.parent.symbol)
+if __name__ == '__main__':
+    main()
