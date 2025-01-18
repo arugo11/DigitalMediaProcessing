@@ -12,7 +12,7 @@ fname_out = sys.argv[2]
 img = np.float32( cv2.imread(fname_in) )
 
 #grayscale画像の作成
-H, W = img.shape[:2] 
+H, W = img.shape[:2] # type: ignore
 img_gray = np.zeros((H,W), dtype=np.float32) #型はnp.float32
 
 
@@ -20,14 +20,14 @@ img_gray = np.zeros((H,W), dtype=np.float32) #型はnp.float32
 for y in range(H) :
     for x in range(W) :
         #以下のコードでは，画像のr値をimg_grayに代入している(色はBGR順)
-        blue  = img[y,x,0]
-        green = img[y,x,1]
-        red   = img[y,x,2]
+        blue  = img[y,x,0] # type: ignore
+        green = img[y,x,1] # type: ignore
+        red   = img[y,x,2] # type: ignore
         img_gray[y,x] = (red + green + blue) / 3
 
 
 #save image
-cv2.imwrite(fname_out, np.uint8(img_gray) )
+cv2.imwrite(fname_out, np.uint8(img_gray) ) # type: ignore
 
 
 #解説 :
