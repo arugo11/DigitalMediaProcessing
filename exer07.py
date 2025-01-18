@@ -13,7 +13,9 @@ fname_out = sys.argv[2]
 img    = cv2.imread(fname_in)
 
 #!!ここを編集
-
+for y in range(height := img.shape[0]):
+    for x in range(width := img.shape[1]):
+        img[y,x,1], img[y,x,2] = img[y,x,2], img[y,x,1]
 
 #save image
 cv2.imwrite(fname_out, img )
