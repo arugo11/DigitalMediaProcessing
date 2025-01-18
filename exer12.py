@@ -24,7 +24,17 @@ img_out = np.zeros_like( img )
 
 
 #!!ここを編集する!! img_outの各画素における勾配強度を計算する
+height, width = img.shape
 
+
+for y in range(1, height - 1):
+    for x in range(1, width - 1):
+        fx = img[y, x + 1] - img[y, x - 1]
+        fy = img[y + 1, x] - img[y - 1, x]
+        
+        intensity = math.sqrt(fx ** 2 + fy ** 2)
+        
+        img_out[y, x] = min(intensity, 255)
 
 
 
