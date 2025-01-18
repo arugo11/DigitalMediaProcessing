@@ -19,13 +19,15 @@ img_out = np.zeros_like( img )
 
 
 #!!以下を編集する!!
+kernel = np.array([[1/16, 2/16, 1/16],
+                   [2/16, 4/16, 2/16],
+                   [1/16, 2/16, 1/16]])
+
 for y in range( 1, img.shape[0]-1 ) :
     for x in range( 1, img.shape[1]-1 ) :
-        img_out[y,x] = 0
-        #ヒント: 注目画素の値は img[y,x]で参照できる
-        #ヒント: 注目画素(y,x)の左の画素値は img[y,x-1]で参照できる
-        #ヒント: 注目画素(y,x)の上の画素値は img[y-1,x]で参照できる
-
+        img_out[y,x] = (img[y-1, x-1] * kernel[0, 0] + img[y-1, x] * kernel[0, 1] + img[y-1, x+1] * kernel[0, 2] +
+                         img[y, x-1] * kernel[1, 0] + img[y, x] * kernel[1, 1] + img[y, x+1] * kernel[1, 2] +
+                         img[y+1, x-1] * kernel[2, 0] + img[y+1, x] * kernel[2, 1] + img[y+1, x+1] * kernel[2, 2])
 
 
 
