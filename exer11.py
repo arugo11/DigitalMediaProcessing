@@ -22,12 +22,23 @@ img_out = np.zeros_like( img )
 
 
 #!!以下を編集する!!
+kernel = np.array([[-1, -2, -1],
+                   [0, 0, 0],
+                   [1, 2, 1]])
+
 for y in range( 1, img.shape[0]-1 ) :
     for x in range( 1, img.shape[1]-1 ) :
-        img_out[y,x] = 0
-        #ヒント: gaussian filterとほとんど同じ
-        #ヒント: 負値のときの処理と255を超えたときの処理を忘れずに！
-        #ヒント: 負値でかつ絶対値が255を超える画素にも対応できるように (←例年間違い多いです)
+        val = 0
+        for j in range(kernel.shape[0]):
+            for i in range(kernel.shape[1]):
+                val += img[y + j - 1, x + i - 1] * kernel[j, i]
+        
+        if val < 0:
+            val *= -1
+        if val > 255:
+            val = 255
+
+        img_out[y, x] = val
 
 
 
