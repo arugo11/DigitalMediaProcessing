@@ -28,24 +28,17 @@ img = np.float64(img)
 #ヒント : 以下のfor文の中身を編集すれば実現できるはず
 #（必用ならfor文の範囲を編集してもＯＫ）
 #このfor分自体を削除してもOK
-for y in range( int( img.shape[0] / R + 1) ) :
-    for x in range( int( img.shape[1] / R + 1) ) :
+for y in range( int( img.shape[0] / R + 1) ) : # type: ignore
+    for x in range( int( img.shape[1] / R + 1) ) : # type: ignore
 
-        #ヒント：スライス表現により画像の矩形領域を取り出せる
-        # 以下はヒントなので提出時には削除してください
 
-        # 以下のようにすると[y*R, (y+1)*R) x [x*R, (x+1)*R) の矩形領域のrチャンネルを取り出せる
-        rectR = img[y*R:(y+1)*R, x*R:(x+1)*R, 2]
+        rectBGR:list = [0,0,0]
+        for c in range(3):
+            rectBGR[c] = np.mean(img[y*R:(y+1)*R, x*R:(x+1)*R, c]) # type: ignore
+        img[y*R:(y+1)*R, x*R:(x+1)*R] = tuple(rectBGR) # type: ignore
 
-        print(rectR)
-
-        #代入もできる (x=1, y=3のブロックのみに代入している)
-        if( x == 1 and y == 3) :
-            img[y*R:(y+1)*R, x*R:(x+1)*R, 2] = 100
-
-        # ヒントここまで－－－－－－ 提出時には削除する
 
 
 
 #最後に画像を出力して終了
-cv2.imwrite(fname_out, np.uint8( img) )
+cv2.imwrite(fname_out, np.uint8( img) ) # type: ignore
