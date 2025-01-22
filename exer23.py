@@ -10,34 +10,6 @@ import os
 
 
 
-def quarter_swap(image):
-    """
-    四分割スワップ
-    """
-    h, w = image.shape
-
-    h_top = h // 2
-    h_bottom = h - h_top
-    w_left = w // 2
-    w_right = w - w_left
-
-    # 結果用
-    result = np.zeros_like(image)
-
-    top_left = image[:h_top, :w_left]
-    top_right = image[:h_top, w_left:]
-    bottom_left = image[h_top:, :w_left]
-    bottom_right = image[h_top:, w_left:]
-
-
-    result[:h_bottom, :w_right] = bottom_right    # 右下 → 左上
-    result[:h_bottom, w_right:] = bottom_left     # 左下 → 右上
-
-    result[h_bottom:, :w_right] = top_right      # 右上 → 左下
-    result[h_bottom:, w_right:] = top_left       # 左上 → 右下
-
-    return result
-
 def deconvolution_simple(img_path, kernel_path):
     img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
     kernel = cv2.imread(kernel_path, cv2.IMREAD_GRAYSCALE)
@@ -68,7 +40,7 @@ def deconvolution_simple(img_path, kernel_path):
     f = np.real(f)
     f = f[:img.shape[0], :img.shape[1]]
 
-    deconvolved_img = quarter_swap(f)
+    deconvolved_img = np.fft.fftshift(f)
 
 
     return deconvolved_img
@@ -102,7 +74,7 @@ def deconvolution_wiener(img_path, kernel_path, K=1e-7):
     f = np.real(f)
     f = f[:img.shape[0], :img.shape[1]]
 
-    deconvolved_img = quarter_swap(f)
+    deconvolved_img = np.fft.fftshift(f)
 
 
     return deconvolved_img
