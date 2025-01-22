@@ -60,6 +60,7 @@ def deconvolution_simple(img_path, kernel_path):
     kernel = kernel / np.sum(kernel)
 
     # カーネルをfftのためにイメージと同じサイズに調整
+    #note 周波数領域だから位置は特に考えなくてよいので今回は左上に配置
     kernel_padded = np.zeros(img.shape, dtype=np.float32)
     kernel_h, kernel_w = kernel.shape
     kernel_padded[:kernel_h, :kernel_w] = kernel
@@ -126,11 +127,9 @@ if __name__ == "__main__":
     img_path = sys.argv[1]
     kernel_path = sys.argv[2]
 
-    # 逆畳み込みの実行
     deconvolved_img_simple = deconvolution_simple(img_path, kernel_path)
     deconvolved_img_wiener = deconvolution_wiener(img_path, kernel_path)
 
-    # 出力ファイル名の決定
     basename = os.path.basename(img_path)
     filename = basename.split("_")[0]
     output_simple = os.path.join("out", filename + "_dec_simple.png")
@@ -138,7 +137,4 @@ if __name__ == "__main__":
 
 
     cv2.imwrite(output_simple, deconvolved_img_simple)
-
-
-
     cv2.imwrite(output_wiener, deconvolved_img_wiener)
