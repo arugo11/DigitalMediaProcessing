@@ -18,16 +18,9 @@ def deconvolution_simple(img_path, kernel_path):
     kernel = kernel.astype(np.float32) / 255.0
     kernel = kernel / np.sum(kernel)
 
-    # カーネルをfftのためにイメージと同じサイズに調整
-    #note 周波数領域だから位置は特に考えなくてよいので今回は左上に配置
-    kernel_padded = np.zeros(img.shape, dtype=np.float32)
-    kernel_h, kernel_w = kernel.shape
-    kernel_padded[:kernel_h, :kernel_w] = kernel
-
     # fft
     IMG = np.fft.fft2(img)
-    KERNEL = np.fft.fft2(kernel_padded)
-
+    KERNEL = np.fft.fft2(kernel)
 
     H = 1 / KERNEL
 
@@ -56,14 +49,10 @@ def deconvolution_wiener(img_path, kernel_path, K=1e-7):
     kernel = kernel.astype(np.float32) / 255.0
     kernel = kernel / np.sum(kernel)
 
-    # カーネルをfftのためにイメージと同じサイズに調整
-    kernel_padded = np.zeros(img.shape, dtype=np.float32)
-    kernel_h, kernel_w = kernel.shape
-    kernel_padded[:kernel_h, :kernel_w] = kernel
 
     # fft
     IMG = np.fft.fft2(img)
-    KERNEL = np.fft.fft2(kernel_padded)
+    KERNEL = np.fft.fft2(kernel)
 
 
     # Wienerフィルタ
