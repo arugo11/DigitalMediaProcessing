@@ -65,7 +65,7 @@ def deconvolution_simple(img_path, kernel_path):
 
     F = H * IMG
     f = np.fft.ifft2(F)
-    f = np.abs(f)
+    f = np.real(f)
     f = f[:img.shape[0], :img.shape[1]]
 
     deconvolved_img = quarter_swap(f)
@@ -95,11 +95,11 @@ def deconvolution_wiener(img_path, kernel_path, K=1e-7):
 
 
     # Wienerフィルタ
-    H = (np.conj(KERNEL)) / (np.abs(KERNEL)**2 + K) #Kは1e-7がよさげ
+    H = (np.conj(KERNEL)) / (np.real(KERNEL)**2 + K) #Kは1e-7がよさげ
 
     F = H * IMG
     f = np.fft.ifft2(F)
-    f = np.abs(f)
+    f = np.real(f)
     f = f[:img.shape[0], :img.shape[1]]
 
     deconvolved_img = quarter_swap(f)
