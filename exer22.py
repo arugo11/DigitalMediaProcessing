@@ -13,6 +13,8 @@ import sys
 import cv2
 import math
 
+
+
 fname_in      = sys.argv[1]
 fname_out_Rvu = sys.argv[2]
 fname_out_Ivu = sys.argv[3]
@@ -41,7 +43,17 @@ for v in range( H ) :
         #ヒント: 素朴に実装するならこの下にさらに2重ループを書く事になります
         #ヒント: pythonでfor文をまわすと速度が出ないです。小さい画像でテストしてください。
 
-
+        # メモ化 (真鍋先生はこれで高速化してた気がする,ベクトル化はわすれた)
+        cos_cache = np.array([[math.cos(2 * math.pi * (u*x/W + v*y/H))
+                             for x in range(W)] for y in range(H)])
+        sin_cache = np.array([[math.sin(2 * math.pi * (u*x/W + v*y/H))
+                             for x in range(W)] for y in range(H)])
+        
+        sum_real = np.sum(img * cos_cache)
+        sum_imag = -np.sum(img * sin_cache)
+        
+        Rvu[v,u] = sum_real / (W*H)
+        Ivu[v,u] = sum_imag / (W*H)
 
 
 # 直流成分を0にする（他の画素に比べてここだけ非常に大きな値を持ち、正規化がうまくいかないため場当たり的な方法）
@@ -52,7 +64,13 @@ Rvu[0,0] = 0 #ここは編集しない！
 # (値 – 最小値)/(最大値-最小値) * 255 という変換を施すことで，値の範囲を[0,255]にする
 #（RvuとIvuをそれぞれ個別に正規化すること
 
+Rvu_min = np.min(Rvu)
+Rvu_max = np.max(Rvu)
+Ivu_min = np.min(Ivu)
+Ivu_max = np.max(Ivu)
 
+Rvu = ((Rvu - Rvu_min) / (Rvu_max - Rvu_min) * 255)
+Ivu = ((Ivu - Ivu_min) / (Ivu_max - Ivu_min) * 255)
 
 
 #float型からuint8型に変換し、書き出し
