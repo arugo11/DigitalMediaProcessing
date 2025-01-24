@@ -13,3 +13,7 @@ ss = float(sys.argv[4])
 fname_out = sys.argv[5]
 
 #以下を編集 (2~3行で書けると思います)
+img = cv2.imread(fname_in)
+img_out = cv2.bilateralFilter(img, d, sc, ss)
+cv2.imwrite(fname_out, img_out )
+
