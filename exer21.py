@@ -59,7 +59,7 @@ file_out.close()
 
 """
 # 以下確認用
-plt.figure(figsize=(20, 5)) #これしないと見づらい
+plt.figure(figsize=(4*5, 5)) #これしないと見づらい
 
 plt.subplot(1, 4, 1)
 plt.plot(Rk)

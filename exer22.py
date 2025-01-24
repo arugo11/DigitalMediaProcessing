@@ -30,8 +30,8 @@ img = np.float64(img)
 Rvu = np.zeros_like( img )
 Ivu = np.zeros_like( img )
 
-H = img.shape[0]
-W = img.shape[1]
+H = img.shape[0] #type:ignore
+W = img.shape[1] #type:ignore
 
 
 
@@ -74,5 +74,5 @@ Ivu = ((Ivu - Ivu_min) / (Ivu_max - Ivu_min) * 255)
 
 
 #float型からuint8型に変換し、書き出し
-cv2.imwrite(fname_out_Rvu, np.uint8( Rvu) )
-cv2.imwrite(fname_out_Ivu, np.uint8( Ivu) )
+cv2.imwrite(fname_out_Rvu, np.uint8( Rvu) ) #type:ignore
+cv2.imwrite(fname_out_Ivu, np.uint8( Ivu) ) #type:ignore
