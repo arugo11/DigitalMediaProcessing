@@ -27,7 +27,7 @@ mask = np.array([[15,7,13,1], [4,11,5,9], [12,3,14,6], [0,8,2,10]])
 
 def dithering(img, mask:np.ndarray, block_size:int = 4):
     result = np.array([
-        [255 if (pixel / 255) * 16 > mask[y % 4][x % 4] else 0
+        [255 if (pixel / 255) * 16 > mask[y % block_size][x % block_size] else 0
         for x, pixel in enumerate(row)]
         for y, row in enumerate(img)
     ])
