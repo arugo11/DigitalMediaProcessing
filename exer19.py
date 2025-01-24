@@ -17,21 +17,33 @@ img = np.float64(img)
 
 
 #出力画像を準備
-H = img.shape[0]
-W = img.shape[1]
+H = img.shape[0] # type: ignore
+W = img.shape[1] # type: ignore
 img_out = np.zeros((H,W), np.uint8)
 
 
 
 #誤差拡散法の計算
+THRESHOLD = 127
+DIFFUSION_PIXELS: list[tuple[int, int, float]] = \
+[(0, 1, 5/16), (-1, -1, 3 / 16), (-1, 0, 5 / 16), (1, 1, 3 / 16)]
 for y in range(H)  :
 	for x in range( W)  :
 		#!!ここを編集!!
 		#ヒント: 閾値処理部分と誤差拡散部分に分けて考えると分かりやすい
 		#ヒント: 誤差は元画像 img に足していくとよいかも（好きにしてよい）
+		if  img[y][x] > THRESHOLD: #type:ignore
+			err: int = img[y][x] - 255
+			img[y][x] = 255 #type:ignore
+		else:
+			err: int = img[y][x] - 0
+			img[y][x] = 0 #type:ignore
+		for dy, dx, weight in DIFFUSION_PIXELS:
+			if 0 <= y+dy < H and 0 <= x+dx < W:
+				img[y+dy][x+dx] += weight * err #type:ignore
+
+img_out = np.array(img)
 
 
 
-
-
-cv2.imwrite( fname_out, img_out);
+cv2.imwrite( fname_out, img_out)
