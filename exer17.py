@@ -29,4 +29,4 @@ mask = np.array([[15,7,13,1], [4,11,5,9], [12,3,14,6], [0,8,2,10]])
 
 
 #出力
-cv2.imwrite( fname_out, img_out);
+cv2.imwrite( fname_out, img_out)
