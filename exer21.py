@@ -19,6 +19,8 @@
 import numpy as np
 import sys
 import math
+# 確認用
+import matplotlib.pyplot as plt
 
 fname_in  = sys.argv[1]
 fname_out = sys.argv[2]
@@ -40,9 +42,11 @@ rl, il = [0]*N, [0]*N
 
 
 #!!ここを編集する!!(現在は０を配列に代入している)
-for l in range(N) :
-    rl[l] = 0 # 計算する
-    il[l] = 0 # 計算する
+for l in range(N):
+    for k in range(N):
+        angle = 2 * math.pi * k * l / N
+        rl[l] += (Rk[k] * math.cos(angle) + Ik[k] * math.sin(angle)) / N
+        il[l] += (-Rk[k] * math.sin(angle) + Ik[k] * math.cos(angle)) / N
 
 
 
@@ -52,3 +56,36 @@ file_out = open(fname_out, 'w')
 for i in range( N ) :
     file_out.write( str( rl[i] ) + " " + str( il[i] ) + "\n")
 file_out.close()
+
+"""
+# 以下確認用
+plt.figure(figsize=(20, 5)) #これしないと見づらい
+
+plt.subplot(1, 4, 1)
+plt.plot(Rk)
+plt.title("Sample_Fk(Rk)")
+plt.xlabel("k")
+plt.ylabel("Rk")
+
+plt.subplot(1, 4, 2)
+plt.plot(Ik)
+plt.title("Sample_Fk(Ik)")
+plt.xlabel("k")
+plt.ylabel("Ik")
+
+plt.subplot(1, 4, 3)
+plt.plot(Rk)
+plt.title("Sample_Fk_Inv(Re)")
+plt.xlabel("Index")
+plt.ylabel("Value")
+
+
+plt.subplot(1, 4, 4)
+plt.plot(Ik)
+plt.title("Sample_Fk_Inv(Im)")
+plt.xlabel("Index")
+plt.ylabel("Value")
+
+plt.tight_layout()
+plt.show()
+"""
