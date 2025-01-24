@@ -26,7 +26,7 @@ img_out = np.zeros((H,W), np.uint8)
 #誤差拡散法の計算
 THRESHOLD = 127
 DIFFUSION_PIXELS: list[tuple[int, int, float]] = \
-[(0, 1, 5/16), (-1, -1, 3 / 16), (-1, 0, 5 / 16), (1, 1, 3 / 16)]
+[(0, 1, 5/16), (1, -1, 3 / 16), (1, 0, 5 / 16), (1, 1, 3 / 16)]
 for y in range(H)  :
 	for x in range( W)  :
 		#!!ここを編集!!
@@ -39,7 +39,7 @@ for y in range(H)  :
 			err: int = img[y][x] - 0 #type:ignore
 			img[y][x] = 0 #type:ignore
 
-		
+
 		for dy, dx, weight in DIFFUSION_PIXELS:
 			if 0 <= y+dy < H and 0 <= x+dx < W:
 				img[y+dy][x+dx] += weight * err #type:ignore
