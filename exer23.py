@@ -38,7 +38,7 @@ def deconvolution_simple(img_path, kernel_path):
 
     return deconvolved_img
 
-def deconvolution_wiener(img_path, kernel_path, K=1e-7):
+def deconvolution_wiener(img_path, kernel_path, k=1e-7):
     """
     Wienerフィルター
     """
@@ -56,7 +56,7 @@ def deconvolution_wiener(img_path, kernel_path, K=1e-7):
 
 
     # Wienerフィルタ
-    H = (np.conj(KERNEL)) / (np.real(KERNEL)**2 + K) #Kは1e-7がよさげ
+    H = (np.conj(KERNEL)) / (np.real(KERNEL)**2 + k) #kは1e-7がよさげ
 
     F = H * IMG
     f = np.fft.ifft2(F)
