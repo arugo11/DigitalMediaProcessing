@@ -21,13 +21,19 @@ img_out = np.zeros_like( img )
 
 #!!以下を編集!!(
 
-def ex_window(h:int, w:int, img):
-
-    return 
 #ヒント : img_outはゼロ初期化されているので周囲2画素分にはアクセスしない
 #ヒント: numpyには中央値を出力する関数があるのでそれを利用するとよいかも
-img_out[:, :] = np.median()
+def median_filter(img, window_size = 5):
 
-
+    result = np.zeros_like(img)
+    for y in range(img.shape[0]):
+        for x in range(img.shape[1]):
+            window =img[y:y+window_size, x:x+window_size]
+            result[y, x] = np.median(window)
+    return result
 #float型からuint8型に変換し、書き出し
+
+img_out = median_filter(img)
 cv2.imwrite(fname_out, img_out )
+
+#? 先生の出力画像は周りに黒枠があるけどあれなんなんだろ
