@@ -25,8 +25,13 @@ img_out = np.zeros((H,W), np.uint8)
 #ヒント: ディザパターンは次のような２次元配列で表現できます
 mask = np.array([[15,7,13,1], [4,11,5,9], [12,3,14,6], [0,8,2,10]])
 
-
-
-
+def dithering(img, mask:np.ndarray, block_size:int = 4):
+    result = np.array([
+        [255 if (pixel / 255) * 16 > mask[y % 4][x % 4] else 0
+        for x, pixel in enumerate(row)]
+        for y, row in enumerate(img)
+    ])
+    return result
+img_out = dithering(img, mask)
 #出力
 cv2.imwrite( fname_out, img_out)
