@@ -46,9 +46,20 @@ pattern *= 255
 #ハーフトーン画像を作成計算
 #img_outの各ブロックを埋める
 
+def which_pattern(block) -> int:
+    avg = np.mean(block)
+    return int(avg / 255 * 17)
+
+def density_pattern(img, block_size:int = 4):
+    result = np.zeros_like(img)
+    for y in range(0, img.shape[0] - block_size + 1, block_size):
+        for x in range(0, img.shape[1] - block_size + 1, block_size):
+            result[y:y+block_size, x:x+block_size] = \
+            pattern[which_pattern(img[y:y+block_size, x:x+block_size])]
+    return result
 
 
-
+img_out = density_pattern(img)
 
 #出力
-cv2.imwrite( fname_out, img_out);
+cv2.imwrite( fname_out, img_out)
