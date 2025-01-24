@@ -33,11 +33,13 @@ for y in range(H)  :
 		#ヒント: 閾値処理部分と誤差拡散部分に分けて考えると分かりやすい
 		#ヒント: 誤差は元画像 img に足していくとよいかも（好きにしてよい）
 		if  img[y][x] > THRESHOLD: #type:ignore
-			err: int = img[y][x] - 255
+			err: int = img[y][x] - 255 #type:ignore
 			img[y][x] = 255 #type:ignore
 		else:
-			err: int = img[y][x] - 0
+			err: int = img[y][x] - 0 #type:ignore
 			img[y][x] = 0 #type:ignore
+
+		
 		for dy, dx, weight in DIFFUSION_PIXELS:
 			if 0 <= y+dy < H and 0 <= x+dx < W:
 				img[y+dy][x+dx] += weight * err #type:ignore
